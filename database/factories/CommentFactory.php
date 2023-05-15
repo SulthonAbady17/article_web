@@ -19,7 +19,7 @@ class CommentFactory extends Factory
     {
         return [
             'body' => fake()->sentence(),
-            'user_id' => User::all()->random()->id
+            'user_id' => User::all()->random()->id,
         ];
     }
 }

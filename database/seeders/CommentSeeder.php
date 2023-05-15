@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Database\Seeder;
 

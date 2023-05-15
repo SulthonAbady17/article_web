@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -22,7 +21,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => bcrypt('password'),
             'role' => fake()->randomElement(['author', 'admin']),
-            'is_active' =>fake()->boolean(30)
+            'active' => fake()->boolean(),
         ];
     }
 

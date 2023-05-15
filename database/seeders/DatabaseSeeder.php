@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ArticleSeeder::class,
-            CommentSeeder::class
+            CommentSeeder::class,
         ]);
-        
+
         $comments = Comment::all()->count();
 
         for ($i = 0; $i < $comments; $i++) {
