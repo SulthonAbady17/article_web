@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('comment_article', function (Blueprint $table) {
+        Schema::create('article_comment', function (Blueprint $table) {
             $table->foreignId('comment_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('article_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
@@ -30,7 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comment_article');
+        Schema::dropIfExists('article_comment');
         Schema::dropIfExists('comments');
     }
 };
