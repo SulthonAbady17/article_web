@@ -18,16 +18,16 @@ class ArticleService
         return $articles;
     }
 
-    public static function getById(Article $article): Article
+    public static function getById(string $article_slug): Article
     {
-        $article->load('user', 'comments')->loadCount('comments');
+        $article = Article::with('user', 'comments')->withCount('comments')->whereSlug($article_slug)->first();
 
         return $article;
     }
 
-    public static function getByUser(): Collection
+    public static function getByUser(string $user_slug): Collection
     {
-        $articles = Article::withCount('comments')->where('user_id', auth()->id())->get();
+        $articles = Article::withCount('comments')->whereSlug($user_slug)->get();
 
         return $articles;
     }
@@ -49,13 +49,13 @@ class ArticleService
         return $article;
     }
 
-    public static function update(array $input, Article $article): bool
+    public static function update(array $input, string $article_slug): bool
     {
-        return $article->updateOrFail($input);
+        return Article::whereSlug($article_slug)->updateOrFail($input);
     }
 
-    public static function delete(Article $article): bool
+    public static function delete(string $article_slug): bool
     {
-        return $article->deleteOrFail();
+        return Article::whereSlug($article_slug)->deleteOrFail();
     }
 }

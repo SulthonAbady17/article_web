@@ -19,15 +19,16 @@ class CommentService
         return $comments;
     }
 
-    public static function getById(Comment $comment): Comment
+    public static function getById(string $comment_slug): Comment
     {
-        $comment = $comment->load('user');
+        $comment = Comment::with('user')->whereSlug($comment_slug)->firstOrFail();
 
         return $comment;
     }
 
-    public static function create(array $input, Article $article): Model
+    public static function create(array $input, string $article_slug): Model
     {
+        $article = Article::findBySlugOrFail($article_slug);
         $comment = $article->comments()->create([
             'body' => $input['body'],
             'user_id' => auth()->id(),
@@ -36,13 +37,13 @@ class CommentService
         return $comment;
     }
 
-    public static function update(array $input, Comment $comment): bool
+    public static function update(array $input, string $comment_slug): bool
     {
-        return $comment->updateOrFail($input);
+        return Article::whereSlug($comment_slug)->updateOrFail($input);
     }
 
-    public static function delete(Comment $comment): bool
+    public static function delete(string $comment_slug): bool
     {
-        return $comment->deleteOrFail();
+        return Article::whereSlug($comment_slug)->deleteOrFail();
     }
 }

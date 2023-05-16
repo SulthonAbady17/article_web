@@ -17,11 +17,18 @@ class UserService
         return $users;
     }
 
-    public static function getById(User $user): User
+    public static function getById(string $user_slug): User
     {
-        $user->loadCount('articles');
+        $user = User::whereSlug($user_slug)->first();
 
         return $user;
+    }
+
+    public static function getByActive(bool $is_active): Collection
+    {
+        $users = User::where('active', $is_active)->get();
+
+        return $users;
     }
 
     public static function getByEmail(string $email): User
@@ -43,23 +50,25 @@ class UserService
         return $user;
     }
 
-    public static function update(array $input, User $user): bool
+    public static function update(array $input, string $user_slug): bool
     {
-        return $user->updateOrFail($input);
+        return User::whereSlug($user_slug)->updateOrFail($input);
     }
 
-    public static function delete(User $user): bool
+    public static function delete(string $user_slug): bool
     {
-        return $user->deleteOrFail();
+        return User::whereSlug($user_slug)->deleteOrFail();
     }
 
-    public static function resetPassword(array $input, User $user): bool
+    public static function resetPassword(array $input, string $user_slug): bool
     {
-        return $user->updateOrFail(['password' => bcrypt($input['password'])]);
+        return User::whereSlug($user_slug)->updateOrFail(['password' => bcrypt($input['password'])]);
     }
 
-    public static function active(User $user): bool
+    public static function active(string $user_slug): bool
     {
+        $user = User::findBySlugOrFail($user_slug);
+
         return $user->updateOrFail(['active' => $user->active ? false : true]);
     }
 }
