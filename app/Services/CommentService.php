@@ -36,11 +36,9 @@ class CommentService
         return $comment;
     }
 
-    public static function update(array $input, Comment $comment): Comment
+    public static function update(array $input, Comment $comment): bool
     {
-        $comment->updateOrFail($input);
-
-        return $comment;
+        return $comment->updateOrFail($input);
     }
 
     public static function delete(Comment $comment): bool

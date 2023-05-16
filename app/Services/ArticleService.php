@@ -49,11 +49,9 @@ class ArticleService
         return $article;
     }
 
-    public static function update(array $input, Article $article): Article
+    public static function update(array $input, Article $article): bool
     {
-        $article->updateOrFail($input);
-
-        return $article;
+        return $article->updateOrFail($input);
     }
 
     public static function delete(Article $article): bool

@@ -10,9 +10,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
-        //
+        return $user?->role === 'author' || 'admin';
     }
 
     /**
@@ -20,7 +20,7 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article): bool
     {
-        //
+        return $user->id === $article->user_id;
     }
 
     /**
@@ -28,15 +28,15 @@ class ArticlePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'author';
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Article $article): bool
+    public function update(?User $user, Article $article): bool
     {
-        //
+        return $user?->id === $article->user_id;
     }
 
     /**
@@ -44,7 +44,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        //
+        return $user->id === $article->user_id;
     }
 
     /**

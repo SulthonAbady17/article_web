@@ -43,11 +43,9 @@ class UserService
         return $user;
     }
 
-    public static function update(array $input, User $user): User
+    public static function update(array $input, User $user): bool
     {
-        $user->updateOrFail($input);
-
-        return $user;
+        return $user->updateOrFail($input);
     }
 
     public static function delete(User $user): bool
@@ -55,12 +53,13 @@ class UserService
         return $user->deleteOrFail();
     }
 
-    public static function resetPassword(array $input, User $user): User
+    public static function resetPassword(array $input, User $user): bool
     {
-        $user->updateOrFail([
-            'password' => bcrypt($input['password']),
-        ]);
+        return $user->updateOrFail(['password' => bcrypt($input['password'])]);
+    }
 
-        return $user;
+    public static function active(User $user): bool
+    {
+        return $user->updateOrFail(['active' => $user->active ? false : true]);
     }
 }
