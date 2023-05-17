@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\ArticleService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $articles = ArticleService::getById('clara-mandasari-quisquam-earum-beatae-minus-beatae-qui');
-    return view('welcome', compact('articles'));
-});
+Route::get('/');

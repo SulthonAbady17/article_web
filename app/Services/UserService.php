@@ -12,21 +12,21 @@ class UserService
 {
     public static function getAll(): Collection
     {
-        $users = User::withCount('articles')->get();
+        $users = User::withCount('articles')->orderBy('username')->get();
 
         return $users;
     }
 
-    public static function getById(string $user_slug): User
+    public static function getBySlug(string $user_slug): User
     {
-        $user = User::whereSlug($user_slug)->first();
+        $user = User::whereSlug($user_slug)->firstOrFail();
 
         return $user;
     }
 
     public static function getByActive(bool $is_active): Collection
     {
-        $users = User::where('active', $is_active)->get();
+        $users = User::where('active', $is_active)->orderBy('username')->get();
 
         return $users;
     }

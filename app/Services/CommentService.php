@@ -19,7 +19,7 @@ class CommentService
         return $comments;
     }
 
-    public static function getById(string $comment_slug): Comment
+    public static function getBySlug(string $comment_slug): Comment
     {
         $comment = Comment::with('user')->whereSlug($comment_slug)->firstOrFail();
 

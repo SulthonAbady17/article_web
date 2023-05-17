@@ -13,21 +13,21 @@ class ArticleService
 {
     public static function getAll(): Collection
     {
-        $articles = Article::with('user')->withCount('comments')->get();
+        $articles = Article::with('user')->withCount('comments')->latest()->get();
 
         return $articles;
     }
 
-    public static function getById(string $article_slug): Article
+    public static function getBySlug(string $article_slug): Article
     {
-        $article = Article::with('user', 'comments')->withCount('comments')->whereSlug($article_slug)->first();
+        $article = Article::with('user', 'comments')->withCount('comments')->whereSlug($article_slug)->firstOrFail();
 
         return $article;
     }
 
     public static function getByUser(string $user_slug): Collection
     {
-        $articles = Article::withCount('comments')->whereSlug($user_slug)->get();
+        $articles = Article::withCount('comments')->whereSlug($user_slug)->latest()->get();
 
         return $articles;
     }
