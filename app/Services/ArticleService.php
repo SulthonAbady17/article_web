@@ -13,14 +13,14 @@ class ArticleService
 {
     public static function getAll(): Collection
     {
-        $articles = Article::with('user')->withCount('comments')->latest()->get();
+        $articles = Article::with('user')->withCount('comments')->get();
 
         return $articles;
     }
 
     public static function getBySlug(string $article_slug): Article
     {
-        $article = Article::with('user', 'comments')->withCount('comments')->whereSlug($article_slug)->firstOrFail();
+        $article = Article::with('user', 'comments.user')->withCount('comments')->whereSlug($article_slug)->firstOrFail();
 
         return $article;
     }
